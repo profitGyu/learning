@@ -1,0 +1,197 @@
+'use client';
+
+import { MutableRefObject } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { YouTubeSong } from '@/lib/japanese-data';
+import {
+  Play,
+  Pause,
+  SkipForward,
+  SkipBack,
+  Volume2,
+  VolumeX,
+  Eye,
+  EyeOff
+} from 'lucide-react';
+import YouTube, { YouTubePlayer as YTPlayer } from 'react-youtube';
+
+interface YouTubePlayerProps {
+  selectedSong: YouTubeSong;
+  currentTime: number;
+  isPlaying: boolean;
+  playerReady: boolean;
+  volume: number;
+  isMuted: boolean;
+  showKorean: boolean;
+  showRomaji: boolean;
+  setShowKorean: (show: boolean) => void;
+  setShowRomaji: (show: boolean) => void;
+  playerRef: MutableRefObject<YTPlayer | null>;
+  opts: any;
+  onReady: (event: { target: YTPlayer }) => void;
+  onStateChange: (event: { data: number }) => void;
+  seekToTime: (time: number) => void;
+}
+
+export function YouTubePlayer({
+  selectedSong,
+  currentTime,
+  isPlaying,
+  playerReady,
+  volume,
+  isMuted,
+  showKorean,
+  showRomaji,
+  setShowKorean,
+  setShowRomaji,
+  playerRef,
+  opts,
+  onReady,
+  onStateChange,
+  seekToTime
+}: YouTubePlayerProps) {
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const togglePlayPause = () => {
+    if (!playerRef.current || !playerReady) return;
+
+    if (isPlaying) {
+      playerRef.current.pauseVideo();
+    } else {
+      playerRef.current.playVideo();
+    }
+  };
+
+  const skipForward = () => {
+    const newTime = Math.min(currentTime + 10, selectedSong.duration);
+    seekToTime(newTime);
+  };
+
+  const skipBackward = () => {
+    const newTime = Math.max(currentTime - 10, 0);
+    seekToTime(newTime);
+  };
+
+  const toggleMute = () => {
+    if (!playerRef.current || !playerReady) return;
+
+    if (isMuted) {
+      playerRef.current.unMute();
+      playerRef.current.setVolume(volume);
+    } else {
+      playerRef.current.mute();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* YouTube Player */}
+      <Card className="bg-black">
+        <CardContent className="p-4">
+          <div className="aspect-video bg-black rounded-lg overflow-hidden">
+            <YouTube
+              videoId={selectedSong.youtubeId}
+              opts={opts}
+              onReady={onReady}
+              onStateChange={onStateChange}
+              className="w-full h-full"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Custom Controls */}
+      <Card className="bg-white/80 backdrop-blur-sm">
+        <CardContent className="p-4">
+          {/* Progress Bar */}
+          <div className="mb-4">
+            <div className="flex justify-between text-sm text-gray-600 mb-2">
+              <span>{formatTime(currentTime)}</span>
+              <span>{formatTime(selectedSong.duration)}</span>
+            </div>
+            <Progress
+              value={(currentTime / selectedSong.duration) * 100}
+              className="h-2 cursor-pointer"
+              onClick={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const percentage = x / rect.width;
+                const newTime = percentage * selectedSong.duration;
+                seekToTime(newTime);
+              }}
+            />
+          </div>
+
+          {/* Control Buttons */}
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={skipBackward}
+              disabled={!playerReady}
+            >
+              <SkipBack className="h-4 w-4" />
+            </Button>
+            <Button
+              onClick={togglePlayPause}
+              size="lg"
+              disabled={!playerReady}
+              className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
+            >
+              {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={skipForward}
+              disabled={!playerReady}
+            >
+              <SkipForward className="h-4 w-4" />
+            </Button>
+          </div>
+
+          {/* Volume and Settings */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleMute}
+                disabled={!playerReady}
+              >
+                {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowRomaji(!showRomaji)}
+                className={showRomaji ? 'bg-blue-100' : ''}
+              >
+                {showRomaji ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                로마지
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowKorean(!showKorean)}
+                className={showKorean ? 'bg-green-100' : ''}
+              >
+                {showKorean ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                한국어
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
