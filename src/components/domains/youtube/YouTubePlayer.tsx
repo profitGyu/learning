@@ -33,6 +33,7 @@ interface YouTubePlayerProps {
   onReady: (event: { target: YTPlayer }) => void;
   onStateChange: (event: { data: number }) => void;
   seekToTime: (time: number) => void;
+  toggleMute: () => void;
 }
 
 export function YouTubePlayer({
@@ -50,7 +51,8 @@ export function YouTubePlayer({
   opts,
   onReady,
   onStateChange,
-  seekToTime
+  seekToTime,
+  toggleMute
 }: YouTubePlayerProps) {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -78,16 +80,7 @@ export function YouTubePlayer({
     seekToTime(newTime);
   };
 
-  const toggleMute = () => {
-    if (!playerRef.current || !playerReady) return;
-
-    if (isMuted) {
-      playerRef.current.unMute();
-      playerRef.current.setVolume(volume);
-    } else {
-      playerRef.current.mute();
-    }
-  };
+  // toggleMute 함수는 props로 받음
 
   return (
     <div className="space-y-4">
@@ -115,17 +108,22 @@ export function YouTubePlayer({
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(selectedSong.duration)}</span>
             </div>
-            <Progress
-              value={(currentTime / selectedSong.duration) * 100}
-              className="h-2 cursor-pointer"
-              onClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const percentage = x / rect.width;
-                const newTime = percentage * selectedSong.duration;
-                seekToTime(newTime);
-              }}
-            />
+            <div className="relative">
+              <Progress
+                value={(currentTime / selectedSong.duration) * 100}
+                className="h-2 cursor-pointer"
+              />
+              <div
+                className="absolute inset-0 cursor-pointer"
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const percentage = Math.max(0, Math.min(1, x / rect.width));
+                  const newTime = percentage * selectedSong.duration;
+                  seekToTime(newTime);
+                }}
+              />
+            </div>
           </div>
 
           {/* Control Buttons */}
@@ -177,7 +175,7 @@ export function YouTubePlayer({
                 className={showRomaji ? 'bg-blue-100' : ''}
               >
                 {showRomaji ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                로마지
+                한국어 발음
               </Button>
               <Button
                 variant="ghost"

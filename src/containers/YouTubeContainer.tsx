@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { PageHeader } from '@/components/domains/common/PageHeader';
 import { SongSelection } from '@/components/domains/youtube/SongSelection';
 import { YouTubePlayer } from '@/components/domains/youtube/YouTubePlayer';
@@ -9,22 +8,22 @@ import { LyricsSidebar } from '@/components/domains/youtube/LyricsSidebar';
 import { CurrentLyricDisplay } from '@/components/domains/youtube/CurrentLyricDisplay';
 import { youtubeSongs } from '@/lib/japanese-data';
 import { Badge } from '@/components/ui/badge';
-import { Youtube } from 'lucide-react';
-import YouTube, { YouTubePlayer as YTPlayer } from 'react-youtube';
+import { YouTubePlayer as YTPlayer } from 'react-youtube';
 
 export function YouTubeContainer() {
   const [selectedSong, setSelectedSong] = useState(youtubeSongs[0]);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentLyricIndex, setCurrentLyricIndex] = useState(-1);
+  const [lastValidLyricIndex, setLastValidLyricIndex] = useState(-1);
   const [showKorean, setShowKorean] = useState(true);
   const [showRomaji, setShowRomaji] = useState(true);
   const [playerReady, setPlayerReady] = useState(false);
-  const [volume, setVolume] = useState(50);
+  const [volume] = useState<number>(50);
   const [isMuted, setIsMuted] = useState(false);
 
   const playerRef = useRef<YTPlayer | null>(null);
-  const timeUpdateRef = useRef<NodeJS.Timeout>();
+  const timeUpdateRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   // YouTube player options
   const opts = {
@@ -42,54 +41,7 @@ export function YouTubeContainer() {
     },
   };
 
-  // YouTube player event handlers
-  const onReady = useCallback((event: { target: YTPlayer }) => {
-    playerRef.current = event.target;
-    setPlayerReady(true);
-    playerRef.current.setVolume(volume);
-  }, [volume]);
-
-  const onPlay = useCallback(() => {
-    setIsPlaying(true);
-    startTimeTracking();
-  }, []);
-
-  const onPause = useCallback(() => {
-    setIsPlaying(false);
-    stopTimeTracking();
-  }, []);
-
-  const onEnd = useCallback(() => {
-    setIsPlaying(false);
-    setCurrentTime(0);
-    setCurrentLyricIndex(-1);
-    stopTimeTracking();
-  }, []);
-
-  const onStateChange = useCallback((event: { data: number }) => {
-    if (event.data === 1) { // PLAYING
-      onPlay();
-    } else if (event.data === 2) { // PAUSED
-      onPause();
-    } else if (event.data === 0) { // ENDED
-      onEnd();
-    }
-  }, [onPlay, onPause, onEnd]);
-
-  // Time tracking
-  const startTimeTracking = useCallback(() => {
-    if (timeUpdateRef.current) {
-      clearInterval(timeUpdateRef.current);
-    }
-
-    timeUpdateRef.current = setInterval(() => {
-      if (playerRef.current && playerReady) {
-        const time = playerRef.current.getCurrentTime();
-        setCurrentTime(time);
-      }
-    }, 100);
-  }, [playerReady]);
-
+  // Time tracking functions
   const stopTimeTracking = useCallback(() => {
     if (timeUpdateRef.current) {
       clearInterval(timeUpdateRef.current);
@@ -97,29 +49,136 @@ export function YouTubeContainer() {
     }
   }, []);
 
+  const startTimeTracking = useCallback(() => {
+    if (timeUpdateRef.current) {
+      clearInterval(timeUpdateRef.current);
+    }
+
+    timeUpdateRef.current = setInterval(() => {
+      if (playerRef.current && playerReady) {
+        try {
+          const time = playerRef.current.getCurrentTime();
+          if (typeof time === 'number' && !isNaN(time)) {
+            setCurrentTime(time);
+          }
+        } catch (error) {
+          console.warn('Failed to get current time from player:', error);
+        }
+      }
+    }, 50); // 더 정확한 동기화를 위해 50ms로 단축
+  }, [playerReady]);
+
+  // 뮤트 상태를 토글하는 함수
+  const toggleMute = useCallback(() => {
+    if (!playerRef.current || !playerReady) return;
+
+    try {
+      if (isMuted) {
+        playerRef.current.unMute();
+        playerRef.current.setVolume(volume);
+        setIsMuted(false);
+      } else {
+        playerRef.current.mute();
+        setIsMuted(true);
+      }
+    } catch (error) {
+      console.warn('Failed to toggle mute:', error);
+    }
+  }, [isMuted, volume, playerReady]);
+
+  // YouTube player event handlers
+  const onReady = useCallback((event: { target: YTPlayer }) => {
+    console.log('YouTube player ready');
+    playerRef.current = event.target;
+    setPlayerReady(true);
+    try {
+      playerRef.current.setVolume(volume);
+      // 뮤트 상태 초기화
+      if (isMuted) {
+        playerRef.current.mute();
+      }
+    } catch (error) {
+      console.warn('Failed to set initial volume/mute:', error);
+    }
+  }, [volume, isMuted]);
+
+  const onPlay = useCallback(() => {
+    setIsPlaying(true);
+    startTimeTracking();
+  }, [startTimeTracking]);
+
+  const onPause = useCallback(() => {
+    setIsPlaying(false);
+    stopTimeTracking();
+  }, [stopTimeTracking]);
+
+  const onEnd = useCallback(() => {
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setCurrentLyricIndex(-1);
+    stopTimeTracking();
+  }, [stopTimeTracking]);
+
+  const onStateChange = useCallback((event: { data: number }) => {
+    console.log('YouTube player state changed:', event.data);
+    if (event.data === 1) { // PLAYING
+      onPlay();
+    } else if (event.data === 2) { // PAUSED
+      onPause();
+    } else if (event.data === 0) { // ENDED
+      onEnd();
+    } else if (event.data === 3) { // BUFFERING
+      // 버퍼링 중에는 재생 상태를 유지하되 시간 추적은 잠시 중단
+      stopTimeTracking();
+    } else if (event.data === 5) { // CUED
+      setCurrentTime(0);
+      setCurrentLyricIndex(-1);
+    }
+  }, [onPlay, onPause, onEnd, stopTimeTracking]);
+
   // Find current lyric based on time
   useEffect(() => {
     const currentLyric = selectedSong.lyrics.findIndex(lyric =>
       currentTime >= lyric.startTime && currentTime <= lyric.endTime
     );
     setCurrentLyricIndex(currentLyric);
+
+    // 유효한 가사가 있을 때만 마지막 가사 인덱스 업데이트
+    if (currentLyric >= 0) {
+      setLastValidLyricIndex(currentLyric);
+    }
   }, [currentTime, selectedSong.lyrics]);
 
   // Control functions
-  const seekToTime = (time: number) => {
+  const seekToTime = useCallback((time: number) => {
     if (playerRef.current && playerReady) {
-      playerRef.current.seekTo(time, true);
-      setCurrentTime(time);
+      try {
+        playerRef.current.seekTo(time, true);
+        setCurrentTime(time);
+        // 가사 인덱스도 즉시 업데이트
+        const lyricIndex = selectedSong.lyrics.findIndex(lyric =>
+          time >= lyric.startTime && time <= lyric.endTime
+        );
+        setCurrentLyricIndex(lyricIndex);
+        if (lyricIndex >= 0) {
+          setLastValidLyricIndex(lyricIndex);
+        }
+      } catch (error) {
+        console.warn('Failed to seek to time:', error);
+      }
     }
-  };
+  }, [playerReady, selectedSong.lyrics]);
 
-  const selectSong = (song: typeof selectedSong) => {
+  const selectSong = useCallback((song: typeof selectedSong) => {
+    console.log('Selecting new song:', song.title);
     setSelectedSong(song);
     setCurrentTime(0);
     setCurrentLyricIndex(-1);
+    setLastValidLyricIndex(-1);
     setIsPlaying(false);
+    setPlayerReady(false); // 새 영상을 위해 준비 상태 리셋
     stopTimeTracking();
-  };
+  }, [stopTimeTracking]);
 
   // Cleanup
   useEffect(() => {
@@ -172,22 +231,27 @@ export function YouTubeContainer() {
             onReady={onReady}
             onStateChange={onStateChange}
             seekToTime={seekToTime}
+            toggleMute={toggleMute}
           />
 
           <div className="space-y-4">
             <LyricsSidebar
               lyrics={selectedSong.lyrics}
               currentLyricIndex={currentLyricIndex}
+              currentTime={currentTime}
+              duration={selectedSong.duration}
               showKorean={showKorean}
               showRomaji={showRomaji}
               seekToTime={seekToTime}
             />
 
-            {currentLyricIndex >= 0 && (
+            {/* 현재 가사가 있으면 현재 가사, 없으면 마지막 유효 가사 표시 */}
+            {(currentLyricIndex >= 0 || lastValidLyricIndex >= 0) && (
               <CurrentLyricDisplay
-                lyric={selectedSong.lyrics[currentLyricIndex]}
+                lyric={selectedSong.lyrics[currentLyricIndex >= 0 ? currentLyricIndex : lastValidLyricIndex]}
                 showKorean={showKorean}
                 showRomaji={showRomaji}
+                isActive={currentLyricIndex >= 0}
               />
             )}
           </div>

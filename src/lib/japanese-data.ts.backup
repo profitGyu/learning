@@ -226,80 +226,70 @@ export const youtubeSongs = [
         endTime: 36,
         japanese: "だけど大それた夢をちゃんと描く強かさも", 
         romaji: "dakedo oosoreta yume wo chanto egaku shitakasa mo", 
-        korean: "그래도 터무니없는 꿈을 제대로 그려내는 강인함도",
-        koreanPronunciation: "다케도 오오소레타 유메오 찬토 에가쿠 시타카사모"
+        korean: "그래도 터무니없는 꿈을 제대로 그려내는 강인함도" 
       },
       { 
         startTime: 39, 
         endTime: 43,
         japanese: "焦るよいつも 足音の群衆が僕の努力を", 
         romaji: "aseru yo itsumo ashioto no gunshuu ga boku no doryoku wo", 
-        korean: "초조해 언제나 발소리의 군중이 나의 노력을",
-        koreanPronunciation: "아세루 요 이츠모 아시오토노 군슈우가 보쿠노 도료쿠오"
+        korean: "초조해 언제나 발소리의 군중이 나의 노력을" 
       },
       { 
         startTime: 43, 
         endTime: 47,
         japanese: "引き裂いて何度 君という闇の世話になったろう", 
         romaji: "hikisaite nando kimi to iu yami no sewa ni natta rou", 
-        korean: "찢어 놓아 몇 번이나 너라는 어둠의 신세를 졌었지",
-        koreanPronunciation: "히키사이테 난도 키미토 이우 야미노 세와니 낫타로우"
+        korean: "찢어 놓아 몇 번이나 너라는 어둠의 신세를 졌었지" 
       },
       { 
         startTime: 51, 
         endTime: 55,
         japanese: "オンリーワンでもいいと 無理やりつけたアイマスクの", 
         romaji: "onrii wan demo ii to muriyari tsuketa ai masuku no", 
-        korean: "온리 원이라도 괜찮다고 억지로 쓴 아이 마스크",
-        koreanPronunciation: "온리 완데모 이이토 무리야리 츠케타 아이 마스쿠노"
+        korean: "온리 원이라도 괜찮다고 억지로 쓴 아이 마스크" 
       },
       { 
         startTime: 55, 
         endTime: 59,
         japanese: "奥で一睡もしやしない自分も見飽きたよ", 
         romaji: "oku de issui mo shiya shinai jibun mo miakita yo", 
-        korean: "속에서 한숨도 못 자는 자신도 질려버렸어",
-        koreanPronunciation: "오쿠데 잇스이모 시야 시나이 지분모 미아키타 요"
+        korean: "속에서 한숨도 못 자는 자신도 질려버렸어" 
       },
       { 
         startTime: 63, 
         endTime: 67,
         japanese: "現実的、客観的に見れば 絶望的。", 
         romaji: "genjitsuteki, kyakkanteki ni mireba zetsubouteki.", 
-        korean: "현실적, 객관적으로 보면 절망적.",
-        koreanPronunciation: "곐지츠테키, 쫀칸테키니 미레바 제츠보우테키"
+        korean: "현실적, 객관적으로 보면 절망적." 
       },
       { 
         startTime: 67, 
         endTime: 71,
         japanese: "絶対的1位はきっと取れないな", 
         romaji: "zettaiteki ichii wa kitto torenai na", 
-        korean: "절대적 1등은 분명 못 할 거야",
-        koreanPronunciation: "젠타이테키 이치이와 키토 토레나이 나"
+        korean: "절대적 1등은 분명 못 할 거야" 
       },
       { 
         startTime: 71, 
         endTime: 75,
         japanese: "分かってる 分かっちゃいるんだけど", 
         romaji: "wakatteru wakaccha iru n da kedo", 
-        korean: "알고 있어, 알고는 있지만",
-        koreanPronunciation: "와카테루 와카챠 이룬다케도"
+        korean: "알고 있어, 알고는 있지만" 
       },
       { 
         startTime: 75, 
         endTime: 80,
         japanese: "圧倒的、直感的に僕は 納得出来出来ちゃいない", 
         romaji: "attouteki, chokanteki ni boku wa nattoku deki deki cha inai", 
-        korean: "압도적, 직감적으로 나는 납득할 수가 없어",
-        koreanPronunciation: "아토우테키, 초칸테키니 보쿠와 난토쿠 데키 데키 챠 이나이"
+        korean: "압도적, 직감적으로 나는 납득할 수가 없어" 
       },
       { 
         startTime: 80, 
         endTime: 86,
         japanese: "ああ なんでこんなにも面倒で 不適合な長所を宿してしまったんだろう", 
         romaji: "aa nande konna ni mo mendou de futekigou na chousho wo yadoshite shimatta n darou", 
-        korean: "아 왜 이렇게 귀찮고 부적합한 장점을 품어버린 걸까",
-        koreanPronunciation: "아 난데 코난니모 멘도우데 후테키고우나 초우쇼오 야도시테 시마타다로우"
+        korean: "아 왜 이렇게 귀찮고 부적합한 장점을 품어버린 걸까" 
       },
       { 
         startTime: 93, 
@@ -314,8 +304,7 @@ export const youtubeSongs = [
         endTime: 101,
         japanese: "僕らは泣いてた 笑ってた 競い合ったまま", 
         romaji: "bokura wa naiteta waratteta kisoiatta mama", 
-        korean: "우리는 울고 웃었어 서로 경쟁하면서도",
-        koreanPronunciation: "보쿠라와 나이테타 와랏테타 키소잇타 마마"
+        korean: "우리는 울고 웃었어 서로 경쟁하면서도" 
       },
       { 
         startTime: 104, 
@@ -330,56 +319,49 @@ export const youtubeSongs = [
         endTime: 114,
         japanese: "何度も泣くんだ 笑うんだ メチャクチャなペースで", 
         romaji: "nando mo naku n da warau n da mechakucha na peesu de", 
-        korean: "몇 번이나 울고 웃는다 엉망진창인 페이스로",
-        koreanPronunciation: "난도모 나쿤다 와라운다 메차쿠차나 페-스데"
+        korean: "몇 번이나 울고 웃는다 엉망진창인 페이스로" 
       },
       { 
         startTime: 118, 
         endTime: 120,
         japanese: "これしかないから", 
         romaji: "kore shika nai kara", 
-        korean: "이것밖에 없으니까",
-        koreanPronunciation: "코레시카 나이카라"
+        korean: "이것밖에 없으니까" 
       },
       { 
         startTime: 121, 
         endTime: 123,
         japanese: "しがみついてたかったんだ", 
         romaji: "shigamitsuiteta katta n da", 
-        korean: "매달리고 싶었던 거야",
-        koreanPronunciation: "시가미츠이테타 카타다"
+        korean: "매달리고 싶었던 거야" 
       },
       { 
         startTime: 124, 
         endTime: 126,
         japanese: "居場所が欲しかったんだ", 
         romaji: "ibasho ga hoshikatta n da", 
-        korean: "자리가 필요했던 거야",
-        koreanPronunciation: "이바쇼가 호시카타다"
+        korean: "자리가 필요했던 거야" 
       },
       { 
         startTime: 128, 
         endTime: 132,
         japanese: "何度勝っても それはそれで未来は苦しいもの", 
         romaji: "nando kattemo sore wa sore de mirai wa kurushii mono", 
-        korean: "몇 번을 이겨도 그건 그거대로 미래는 괴로운 것",
-        koreanPronunciation: "난도 카테모 소레와 소레데 미라이와 쿠루시이 모노"
+        korean: "몇 번을 이겨도 그건 그거대로 미래는 괴로운 것" 
       },
       { 
         startTime: 134, 
         endTime: 138,
         japanese: "ああ まじでなんなの？ 負けて負けて負けまくった時ほど", 
         romaji: "aa maji de nan na no? makete makete makemakutta toki hodo", 
-        korean: "아 정말 뭐야? 지고 또 지고 지기만 할 때일수록",
-        koreanPronunciation: "아 마지데 난나노? 마케테 마케테 마케마쿠타 토키 호도"
+        korean: "아 정말 뭐야? 지고 또 지고 지기만 할 때일수록" 
       },
       { 
         startTime: 140, 
         endTime: 146,
         japanese: "思い出話が僕の歩みを遅めてしまうよ 過去の僕と君からの最低のプレゼント", 
         romaji: "omoide banashi ga boku no ayumi wo osomete shimau yo kako no boku to kimi kara no saitei no purezento", 
-        korean: "추억 이야기가 나의 발걸음을 늦추어 버려 과거의 나와 너로부터의 최악의 선물",
-        koreanPronunciation: "오모이데 바나시가 보쿠노 아유미오 오소메테 시마우 요 카코노 보쿠토 키미카라노 사이테이노 프레젠토"
+        korean: "추억 이야기가 나의 발걸음을 늦추어 버려 과거의 나와 너로부터의 최악의 선물" 
       },
       { 
         startTime: 152, 
@@ -407,8 +389,7 @@ export const youtubeSongs = [
         endTime: 169,
         japanese: "プライドは新品のままで白くふやけ痒がっている", 
         romaji: "puraido wa shinpin no mama de shiroku fuyake kayagatte iru", 
-        korean: "프라이드는 새것인 채로 하얗게 불어서 가려워하고 있어",
-        koreanPronunciation: "프라이도와 신핌노 마마데 시로쿠 후야케 카야갓테 이루"
+        korean: "프라이드는 새것인 채로 하얗게 불어서 가려워하고 있어" 
       },
       { 
         startTime: 169, 
@@ -471,8 +452,7 @@ export const youtubeSongs = [
         endTime: 233,
         japanese: "僕はやっぱ誰にも負けたくないんだ そんな熱よどうか 消えてなくなるな！", 
         romaji: "boku wa yappa dare ni mo maketakunai n da sonna netsu yo douka kiete nakunaru na!", 
-        korean: "나는 역시 누구에게도 지고 싶지 않아 그런 열정이여 제발 사라지지 마!",
-        koreanPronunciation: "보쿠와 야파 다레니모 마케타쿠나인다 솔나 네츠요 도우카 키에테 나쿠나루나!"
+        korean: "나는 역시 누구에게도 지고 싶지 않아 그런 열정이여 제발 사라지지 마!" 
       },
       { 
         startTime: 241, 
@@ -542,8 +522,7 @@ export const youtubeSongs = [
         endTime: 288,
         japanese: "本当に良かった ああ 生きてて良かったな", 
         romaji: "hontou ni yokatta aa ikitete yokatta na", 
-        korean: "정말 다행이다 아 살아 있어서 다행이야",
-        koreanPronunciation: "혼토우니 요카타 아 이키테테 요카타나"
+        korean: "정말 다행이다 아 살아 있어서 다행이야" 
       }
     ]
   },
@@ -611,7 +590,7 @@ export type TimedLyricLine = {
   japanese: string;
   romaji: string;
   korean: string;
-  koreanPronunciation?: string;
+  koreanPronunciation: string;
 };
 
 export type Song = {

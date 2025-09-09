@@ -1,7 +1,6 @@
 # 일본어 학습 앱 - Japanese Learning App
 
-Next.js + Tailwind CSS + shadcn/ui + TypeScript를 기반으로 한 **혁신적인 일본어 학습 플랫폼**입니다. 
-ReactBits.dev의 애니메이션과 디자인 패턴을 참조하여 아름답고 인터랙티브한 UI를 구현했습니다.
+Next.js + Tailwind CSS + shadcn/ui + TypeScript를 기반으로 한 ** 일본어 학습 플랫폼**입니다. 
 
 ## 🌟 주요 기능
 
