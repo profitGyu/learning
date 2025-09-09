@@ -26,6 +26,7 @@ interface YouTubePlayerProps {
   isMuted: boolean;
   showKorean: boolean;
   showRomaji: boolean;
+  currentLyricIndex: number;
   setShowKorean: (show: boolean) => void;
   setShowRomaji: (show: boolean) => void;
   playerRef: MutableRefObject<YTPlayer | null>;
@@ -45,6 +46,7 @@ export function YouTubePlayer({
   isMuted,
   showKorean,
   showRomaji,
+  currentLyricIndex,
   setShowKorean,
   setShowRomaji,
   playerRef,
@@ -71,13 +73,36 @@ export function YouTubePlayer({
   };
 
   const skipForward = () => {
-    const newTime = Math.min(currentTime + 10, selectedSong.duration);
-    seekToTime(newTime);
+    // 다음 가사 구간으로 이동
+    const nextLyricIndex = currentLyricIndex + 1;
+    if (nextLyricIndex < selectedSong.lyrics.length) {
+      seekToTime(selectedSong.lyrics[nextLyricIndex].startTime);
+    } else {
+      // 마지막 가사라면 곡의 끝으로 이동
+      seekToTime(selectedSong.duration - 1);
+    }
   };
 
   const skipBackward = () => {
-    const newTime = Math.max(currentTime - 10, 0);
-    seekToTime(newTime);
+    // 이전 가사 구간으로 이동
+    if (currentLyricIndex > 0) {
+      seekToTime(selectedSong.lyrics[currentLyricIndex - 1].startTime);
+    } else if (currentLyricIndex === 0) {
+      // 첫 번째 가사라면 곡의 시작으로 이동
+      seekToTime(0);
+    } else {
+      // 현재 가사가 없으면 현재 시간 이전의 가장 가까운 가사로 이동
+      const previousLyric = selectedSong.lyrics
+        .slice()
+        .reverse()
+        .find(lyric => lyric.startTime < currentTime);
+
+      if (previousLyric) {
+        seekToTime(previousLyric.startTime);
+      } else {
+        seekToTime(0);
+      }
+    }
   };
 
   // toggleMute 함수는 props로 받음

@@ -224,6 +224,7 @@ export function YouTubeContainer() {
             isMuted={isMuted}
             showKorean={showKorean}
             showRomaji={showRomaji}
+            currentLyricIndex={currentLyricIndex}
             setShowKorean={setShowKorean}
             setShowRomaji={setShowRomaji}
             playerRef={playerRef}

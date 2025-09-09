@@ -44,8 +44,8 @@ export function LyricsSidebar({
       const element = lyricRefs.current[index];
 
       if (element) {
-        // 타임라인 높이를 고려하여 스크롤 위치 조정 (타임라인 높이 약 100px 고려)
-        const timelineHeight = 100;
+        // 타임라인 높이를 고려하여 스크롤 위치 조정 (타임라인 높이 약 150px 고려)
+        const timelineHeight = 250;
         const targetTop = element.offsetTop - timelineHeight - 20; // 20px 여백 추가
 
         container.scrollTo({
