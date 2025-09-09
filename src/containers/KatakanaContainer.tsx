@@ -9,7 +9,7 @@ import { CharacterChart } from '@/components/domains/katakana/CharacterChart';
 import { PracticeMode } from '@/components/domains/katakana/PracticeMode';
 import { MemoryGame } from '@/components/domains/katakana/MemoryGame';
 import { CompletionModal } from '@/components/domains/common/CompletionModal';
-import { katakanaData } from '@/lib/japanese-data';
+import { katakanaData } from '@/data';
 import { RotateCcw, Shuffle } from 'lucide-react';
 import Confetti from 'react-confetti';
 

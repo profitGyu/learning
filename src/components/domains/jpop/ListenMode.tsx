@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Song } from '@/lib/japanese-data';
+import { Song } from '@/data';
 import { Play, Pause, SkipForward, SkipBack, Lightbulb } from 'lucide-react';
 
 interface ListenModeProps {

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { WordData } from '@/lib/japanese-data';
+import { WordData } from '@/data';
 import { Check, X } from 'lucide-react';
 
 interface QuizModeProps {

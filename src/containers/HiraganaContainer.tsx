@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/domains/common/PageHeader';
 import { CharacterChart } from '@/components/domains/hiragana/CharacterChart';
 import { PracticeMode } from '@/components/domains/hiragana/PracticeMode';
 import { CompletionModal } from '@/components/domains/common/CompletionModal';
-import { hiraganaData } from '@/lib/japanese-data';
+import { hiraganaData } from '@/data/characters';
 import { RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Confetti from 'react-confetti';

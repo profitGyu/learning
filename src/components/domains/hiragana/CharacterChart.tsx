@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { CharacterData } from '@/lib/japanese-data';
+import { CharacterData } from '@/data';
 
 interface CharacterChartProps {
   data: CharacterData[];

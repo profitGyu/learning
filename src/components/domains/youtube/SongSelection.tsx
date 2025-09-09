@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { YouTubeSong } from '@/lib/japanese-data';
+import type { YouTubeSong } from '@/data/types';
 import { Youtube, Clock } from 'lucide-react';
 
 interface SongSelectionProps {
@@ -34,8 +34,8 @@ export function SongSelection({ songs, selectedSong, onSelectSong }: SongSelecti
           >
             <Card
               className={`cursor-pointer transition-all duration-200 ${selectedSong.id === song.id
-                  ? 'ring-2 ring-red-500 bg-red-50'
-                  : 'hover:shadow-lg bg-white/80'
+                ? 'ring-2 ring-red-500 bg-red-50'
+                : 'hover:shadow-lg bg-white/80'
                 }`}
               onClick={() => onSelectSong(song)}
             >

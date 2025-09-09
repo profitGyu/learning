@@ -9,7 +9,7 @@ import { CategorySelection } from '@/components/domains/basic/CategorySelection'
 import { WordList } from '@/components/domains/basic/WordList';
 import { QuizMode } from '@/components/domains/basic/QuizMode';
 import { CompletionModal } from '@/components/domains/common/CompletionModal';
-import { basicWords } from '@/lib/japanese-data';
+import { basicWords } from '@/data';
 import { RefreshCw } from 'lucide-react';
 import Confetti from 'react-confetti';
 

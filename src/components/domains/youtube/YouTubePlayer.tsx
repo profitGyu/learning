@@ -4,7 +4,7 @@ import { MutableRefObject } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { YouTubeSong } from '@/lib/japanese-data';
+import type { YouTubeSong } from '@/data/types';
 import {
   Play,
   Pause,

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { WordData } from '@/lib/japanese-data';
+import { WordData } from '@/data';
 
 interface CategorySelectionProps {
   categories: Array<{ name: string; icon: string; color: string }>;

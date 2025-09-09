@@ -6,7 +6,7 @@ import { SongSelection } from '@/components/domains/youtube/SongSelection';
 import { YouTubePlayer } from '@/components/domains/youtube/YouTubePlayer';
 import { LyricsSidebar } from '@/components/domains/youtube/LyricsSidebar';
 import { CurrentLyricDisplay } from '@/components/domains/youtube/CurrentLyricDisplay';
-import { youtubeSongs } from '@/lib/japanese-data';
+import { youtubeSongs } from '@/data';
 import { Badge } from '@/components/ui/badge';
 import { YouTubePlayer as YTPlayer } from 'react-youtube';
 

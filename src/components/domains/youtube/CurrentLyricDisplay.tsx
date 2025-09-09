@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TimedLyricLine } from '@/lib/japanese-data';
+import type { TimedLyricLine } from '@/data/types';
 
 interface CurrentLyricDisplayProps {
   lyric: TimedLyricLine;

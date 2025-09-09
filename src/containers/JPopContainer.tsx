@@ -8,7 +8,7 @@ import { SongSelection as JPopSongSelection } from '@/components/domains/jpop/So
 import { ListenMode } from '@/components/domains/jpop/ListenMode';
 import { TranslateMode } from '@/components/domains/jpop/TranslateMode';
 import { VocabMode } from '@/components/domains/jpop/VocabMode';
-import { jpopLyrics, basicWords } from '@/lib/japanese-data';
+import { jpopLyrics, basicWords } from '@/data';
 import { Heart } from 'lucide-react';
 
 export function JPopContainer() {

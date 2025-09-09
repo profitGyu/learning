@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Song, WordData } from '@/lib/japanese-data';
+import { Song, WordData } from '@/data';
 import { BookOpen } from 'lucide-react';
 
 interface VocabModeProps {

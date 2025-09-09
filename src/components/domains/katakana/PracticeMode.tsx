@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { CharacterData } from '@/lib/japanese-data';
+import { CharacterData } from '@/data';
 import { Check, X } from 'lucide-react';
 
 interface PracticeModeProps {

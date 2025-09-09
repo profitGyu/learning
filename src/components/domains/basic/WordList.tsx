@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { WordData } from '@/lib/japanese-data';
+import { WordData } from '@/data';
 
 interface WordListProps {
   words: WordData[];
