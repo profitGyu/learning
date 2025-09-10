@@ -22,7 +22,6 @@ interface YouTubePlayerProps {
   currentTime: number;
   isPlaying: boolean;
   playerReady: boolean;
-  volume: number;
   isMuted: boolean;
   showKorean: boolean;
   showRomaji: boolean;
@@ -30,7 +29,7 @@ interface YouTubePlayerProps {
   setShowKorean: (show: boolean) => void;
   setShowRomaji: (show: boolean) => void;
   playerRef: MutableRefObject<YTPlayer | null>;
-  opts: any;
+  opts: unknown;
   onReady: (event: { target: YTPlayer }) => void;
   onStateChange: (event: { data: number }) => void;
   seekToTime: (time: number) => void;
@@ -42,7 +41,6 @@ export function YouTubePlayer({
   currentTime,
   isPlaying,
   playerReady,
-  volume,
   isMuted,
   showKorean,
   showRomaji,

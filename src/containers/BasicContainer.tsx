@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { PageHeader } from '@/components/domains/common/PageHeader';
@@ -110,7 +110,6 @@ export function BasicContainer() {
               score={score}
               attempts={attempts}
               onRestart={resetQuiz}
-              onHome={() => setMode('learn')}
             />
           )}
         </AnimatePresence>

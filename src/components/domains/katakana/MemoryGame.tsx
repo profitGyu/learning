@@ -46,7 +46,20 @@ export function MemoryGame({ data, score, setScore, moves, setMoves }: MemoryGam
       });
     });
 
-    setMemoryCards(cards.sort(() => Math.random() - 0.5));
+    // Deterministic shuffle using a simple algorithm
+    const shuffleArray = <T,>(array: T[]): T[] => {
+      const result = [...array];
+      let seed = 12345; // Fixed seed for consistent results
+
+      for (let i = result.length - 1; i > 0; i--) {
+        seed = (seed * 16807) % 2147483647;
+        const j = seed % (i + 1);
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      return result;
+    };
+
+    setMemoryCards(shuffleArray(cards));
     setFlippedCards([]);
     setScore(0);
     setMoves(0);

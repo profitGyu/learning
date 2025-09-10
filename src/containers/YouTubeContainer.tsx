@@ -19,7 +19,6 @@ export function YouTubeContainer() {
   const [showKorean, setShowKorean] = useState(true);
   const [showRomaji, setShowRomaji] = useState(true);
   const [playerReady, setPlayerReady] = useState(false);
-  const [volume] = useState<number>(50);
   const [isMuted, setIsMuted] = useState(false);
 
   const playerRef = useRef<YTPlayer | null>(null);
@@ -75,7 +74,7 @@ export function YouTubeContainer() {
     try {
       if (isMuted) {
         playerRef.current.unMute();
-        playerRef.current.setVolume(volume);
+        playerRef.current.setVolume(50);
         setIsMuted(false);
       } else {
         playerRef.current.mute();
@@ -84,7 +83,7 @@ export function YouTubeContainer() {
     } catch (error) {
       console.warn('Failed to toggle mute:', error);
     }
-  }, [isMuted, volume, playerReady]);
+  }, [isMuted, playerReady]);
 
   // YouTube player event handlers
   const onReady = useCallback((event: { target: YTPlayer }) => {
@@ -92,7 +91,7 @@ export function YouTubeContainer() {
     playerRef.current = event.target;
     setPlayerReady(true);
     try {
-      playerRef.current.setVolume(volume);
+      playerRef.current.setVolume(50);
       // 뮤트 상태 초기화
       if (isMuted) {
         playerRef.current.mute();
@@ -100,7 +99,7 @@ export function YouTubeContainer() {
     } catch (error) {
       console.warn('Failed to set initial volume/mute:', error);
     }
-  }, [volume, isMuted]);
+  }, [isMuted]);
 
   const onPlay = useCallback(() => {
     setIsPlaying(true);
@@ -220,7 +219,6 @@ export function YouTubeContainer() {
             currentTime={currentTime}
             isPlaying={isPlaying}
             playerReady={playerReady}
-            volume={volume}
             isMuted={isMuted}
             showKorean={showKorean}
             showRomaji={showRomaji}

@@ -46,13 +46,28 @@ export function PracticeMode({
 
   const generateOptions = () => {
     const correct = currentCharacter.korean;
-    const incorrect = data
-      .filter(item => item.korean !== correct)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 3)
-      .map(item => item.korean);
 
-    return [correct, ...incorrect].sort(() => Math.random() - 0.5);
+    // Use currentIndex as seed for deterministic shuffling
+    const seed = currentIndex + 1;
+    const shuffleArray = <T,>(array: T[], seed: number): T[] => {
+      const result = [...array];
+      let m = result.length, i;
+      let pseudoRandom = seed;
+
+      while (m) {
+        pseudoRandom = (pseudoRandom * 16807) % 2147483647;
+        i = Math.floor((pseudoRandom / 2147483647) * m--);
+        [result[m], result[i]] = [result[i], result[m]];
+      }
+      return result;
+    };
+
+    const incorrect = shuffleArray(
+      data.filter(item => item.korean !== correct).map(item => item.korean),
+      seed
+    ).slice(0, 3);
+
+    return shuffleArray([correct, ...incorrect], seed + 1);
   };
 
   useEffect(() => {

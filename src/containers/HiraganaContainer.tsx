@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PageHeader } from '@/components/domains/common/PageHeader';
 import { CharacterChart } from '@/components/domains/hiragana/CharacterChart';
@@ -85,7 +85,6 @@ export function HiraganaContainer() {
               score={score}
               attempts={attempts}
               onRestart={resetPractice}
-              onHome={() => { }}
             />
           )}
         </AnimatePresence>

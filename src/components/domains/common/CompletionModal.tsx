@@ -9,10 +9,9 @@ interface CompletionModalProps {
   score: number;
   attempts: number;
   onRestart: () => void;
-  onHome: () => void;
 }
 
-export function CompletionModal({ score, attempts, onRestart, onHome }: CompletionModalProps) {
+export function CompletionModal({ score, attempts, onRestart }: CompletionModalProps) {
   const getScoreColor = () => {
     const percentage = (score / attempts) * 100;
     if (percentage >= 80) return 'text-green-600';

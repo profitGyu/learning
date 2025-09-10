@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { PageHeader } from '@/components/domains/common/PageHeader';
@@ -36,7 +36,20 @@ export function KatakanaContainer() {
   }, []);
 
   const shuffleData = () => {
-    setShuffledData([...katakanaData].sort(() => Math.random() - 0.5));
+    // Deterministic shuffle to avoid hydration issues
+    const shuffleArray = <T,>(array: T[]): T[] => {
+      const result = [...array];
+      let seed = Date.now() % 1000000; // Use a time-based seed for variety but client-side only
+
+      for (let i = result.length - 1; i > 0; i--) {
+        seed = (seed * 16807) % 2147483647;
+        const j = seed % (i + 1);
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      return result;
+    };
+
+    setShuffledData(shuffleArray(katakanaData));
     resetPractice();
   };
 
@@ -106,7 +119,6 @@ export function KatakanaContainer() {
               score={score}
               attempts={attempts}
               onRestart={resetPractice}
-              onHome={() => { }}
             />
           )}
         </AnimatePresence>
