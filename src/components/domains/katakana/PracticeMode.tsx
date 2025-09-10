@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { CharacterData } from '@/data';
-import { Check, X } from 'lucide-react';
+import { Check, X, Eye, EyeOff } from 'lucide-react';
 
 interface PracticeModeProps {
   data: CharacterData[];
@@ -39,6 +39,7 @@ export function PracticeMode({
   setPracticeComplete
 }: PracticeModeProps) {
   const [options, setOptions] = useState<string[]>([]);
+  const [showRomaji, setShowRomaji] = useState<boolean>(false);
 
   const currentCharacter = data[currentIndex];
   const progress = ((currentIndex + 1) / data.length) * 100;
@@ -80,12 +81,25 @@ export function PracticeMode({
 
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Progress */}
+      {/* Progress and Controls */}
       <div className="mb-6">
         <Progress value={progress} className="w-64 mx-auto mb-2" />
-        <p className="text-sm text-gray-600 text-center">
+        <p className="text-sm text-gray-600 text-center mb-4">
           {currentIndex + 1} / {data.length}
         </p>
+
+        {/* Romaji Toggle Button */}
+        <div className="flex justify-center">
+          <Button
+            onClick={() => setShowRomaji(!showRomaji)}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            {showRomaji ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {showRomaji ? '로마지 숨기기' : '로마지 보기'}
+          </Button>
+        </div>
       </div>
 
       {/* Question Card */}
@@ -101,9 +115,11 @@ export function PracticeMode({
             <div className="text-8xl md:text-9xl font-bold text-gray-800 mb-4">
               {currentCharacter.character}
             </div>
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              {currentCharacter.romaji}
-            </Badge>
+            {showRomaji && (
+              <Badge variant="secondary" className="text-lg px-4 py-2">
+                {currentCharacter.romaji}
+              </Badge>
+            )}
             {showAnswer && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

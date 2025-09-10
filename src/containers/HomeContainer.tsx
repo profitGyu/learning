@@ -33,20 +33,12 @@ const features = [
     delay: 0.3
   },
   {
-    title: "YouTube 학습",
-    description: "실제 YouTube 영상과 동기화된 가사로 일본어를 배워보세요",
+    title: "노래 학습",
+    description: "실제 노래와 동기화된 가사로 일본어를 배워보세요",
     icon: <Music className="h-8 w-8" />,
     href: "/youtube",
     gradient: "from-red-400 to-orange-600",
     delay: 0.4
-  },
-  {
-    title: "J-Pop 학습",
-    description: "좋아하는 J-Pop 가사로 실제 일본어 표현을 배워보세요",
-    icon: <Music className="h-8 w-8" />,
-    href: "/jpop",
-    gradient: "from-indigo-400 to-indigo-600",
-    delay: 0.5
   }
 ];
 

@@ -35,11 +35,7 @@ export function QuickStartSection() {
               YouTube로 시작
             </Button>
           </Link>
-          <Link href="/jpop">
-            <Button size="lg" variant="outline" className="border-purple-300 hover:bg-purple-50">
-              J-Pop으로 시작
-            </Button>
-          </Link>
+
         </CardContent>
       </Card>
     </motion.div>
