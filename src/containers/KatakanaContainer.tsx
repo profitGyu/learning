@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { PageHeader } from '@/components/domains/common/PageHeader';
+import { KatakanaChart } from '@/components/domains/katakana/KatakanaChart';
 import { CharacterChart } from '@/components/domains/katakana/CharacterChart';
 import { PracticeMode } from '@/components/domains/katakana/PracticeMode';
 import { MemoryGame } from '@/components/domains/katakana/MemoryGame';
@@ -125,13 +126,19 @@ export function KatakanaContainer() {
 
         <Tabs value={mode} onValueChange={(value) => setMode(value as 'chart' | 'practice' | 'memory')} className="w-full">
           <TabsList className="grid w-full grid-cols-3 max-w-lg mx-auto mb-8">
-            <TabsTrigger value="chart">문자표</TabsTrigger>
+            <TabsTrigger value="chart">50음도표</TabsTrigger>
             <TabsTrigger value="practice">연습하기</TabsTrigger>
             <TabsTrigger value="memory">메모리 게임</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="chart">
-            <CharacterChart data={katakanaData} />
+          <TabsContent value="chart" className="space-y-6">
+            <KatakanaChart />
+            <div className="mt-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+                전체 가타카나 문자 ({katakanaData.length}자)
+              </h3>
+              <CharacterChart data={katakanaData} />
+            </div>
           </TabsContent>
 
           <TabsContent value="practice">

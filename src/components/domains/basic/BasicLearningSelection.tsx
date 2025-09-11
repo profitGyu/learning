@@ -138,6 +138,7 @@ export function BasicLearningSelection({ onSelectLearning }: BasicLearningSelect
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => onSelectLearning(option.path)}
             >
               <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl bg-white/90 backdrop-blur-sm border-2 hover:border-indigo-300 h-full flex flex-col">
                 <CardHeader className="pb-4">
@@ -193,7 +194,10 @@ export function BasicLearningSelection({ onSelectLearning }: BasicLearningSelect
                   {/* 학습 시작 버튼 - 하단 고정 */}
                   <div className="mt-4">
                     <Button
-                      onClick={() => onSelectLearning(option.path)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // 카드 클릭 이벤트 중복 방지
+                        onSelectLearning(option.path);
+                      }}
                       className={`w-full bg-gradient-to-r ${option.color.from} ${option.color.to} hover:opacity-90 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg`}
                     >
                       학습 시작하기

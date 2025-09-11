@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PageHeader } from '@/components/domains/common/PageHeader';
+import { HiraganaChart } from '@/components/domains/hiragana/HiraganaChart';
 import { CharacterChart } from '@/components/domains/hiragana/CharacterChart';
 import { PracticeMode } from '@/components/domains/hiragana/PracticeMode';
 import { CompletionModal } from '@/components/domains/common/CompletionModal';
@@ -91,12 +92,18 @@ export function HiraganaContainer() {
 
         <Tabs value={mode} onValueChange={(value) => setMode(value as 'chart' | 'practice')} className="w-full">
           <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto mb-8">
-            <TabsTrigger value="chart">문자표</TabsTrigger>
+            <TabsTrigger value="chart">50음도표</TabsTrigger>
             <TabsTrigger value="practice">연습하기</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="chart">
-            <CharacterChart data={hiraganaData} />
+          <TabsContent value="chart" className="space-y-6">
+            <HiraganaChart />
+            <div className="mt-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+                전체 히라가나 문자 ({hiraganaData.length}자)
+              </h3>
+              <CharacterChart data={hiraganaData} />
+            </div>
           </TabsContent>
 
           <TabsContent value="practice">

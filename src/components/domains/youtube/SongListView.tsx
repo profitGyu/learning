@@ -59,6 +59,7 @@ export function SongListView({ songs, onSelectSong }: SongListViewProps) {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => onSelectSong(songWithThumbnail)}
             >
               <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl border-2 hover:border-red-300 overflow-hidden relative h-full flex flex-col">
                 {/* 썸네일 배경 이미지 */}
@@ -130,7 +131,10 @@ export function SongListView({ songs, onSelectSong }: SongListViewProps) {
                   {/* 학습 시작 버튼 - 하단 고정 */}
                   <div className="mt-4">
                     <Button
-                      onClick={() => onSelectSong(songWithThumbnail)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // 카드 클릭 이벤트 중복 방지
+                        onSelectSong(songWithThumbnail);
+                      }}
                       className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg shadow-lg"
                     >
                       <Play className="h-4 w-4 mr-2" />
