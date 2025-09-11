@@ -48,8 +48,8 @@ export function KatakanaChart() {
                 <div
                   key={`header-${colIndex}`}
                   className={`p-2 font-bold ${colIndex === 0
-                      ? 'bg-gray-100 text-gray-600'
-                      : 'bg-green-100 text-green-700'
+                    ? 'bg-gray-100 text-gray-600'
+                    : 'bg-green-100 text-green-700'
                     } rounded-t-lg`}
                 >
                   {header}
@@ -86,8 +86,8 @@ export function KatakanaChart() {
                       }}
                       whileHover={character ? { scale: 1.1 } : {}}
                       className={`aspect-square flex items-center justify-center ${character
-                          ? 'bg-white border-2 border-gray-200 hover:border-green-300 hover:shadow-md cursor-pointer transition-all duration-200'
-                          : 'bg-gray-50 border border-gray-100'
+                        ? 'bg-white border-2 border-gray-200 hover:border-green-300 hover:shadow-md cursor-pointer transition-all duration-200'
+                        : 'bg-gray-50 border border-gray-100'
                         } rounded-lg`}
                     >
                       {character && (
