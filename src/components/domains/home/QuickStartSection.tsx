@@ -25,9 +25,9 @@ export function QuickStartSection() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/hiragana">
+          <Link href="/learn">
             <Button size="lg" className="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700">
-              히라가나부터 시작
+              기초부터 시작
             </Button>
           </Link>
           <Link href="/youtube">
@@ -35,7 +35,6 @@ export function QuickStartSection() {
               YouTube로 시작
             </Button>
           </Link>
-
         </CardContent>
       </Card>
     </motion.div>

@@ -1,5 +1,5 @@
-import { KatakanaContainer } from '@/containers/KatakanaContainer';
+import { redirect } from 'next/navigation';
 
 export default function KatakanaPage() {
-  return <KatakanaContainer />;
+  redirect('/learn');
 }

@@ -60,7 +60,7 @@ export function SongListView({ songs, onSelectSong }: SongListViewProps) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl border-2 hover:border-red-300 overflow-hidden relative">
+              <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl border-2 hover:border-red-300 overflow-hidden relative h-full flex flex-col">
                 {/* 썸네일 배경 이미지 */}
                 {songWithThumbnail.thumbnailUrl && (
                   <div className="absolute inset-0 z-0">
@@ -124,9 +124,11 @@ export function SongListView({ songs, onSelectSong }: SongListViewProps) {
                   </div>
                 </CardHeader>
 
-                <CardContent className="pt-0 relative z-10">
-                  <div className="space-y-3">
-                    {/* 학습 시작 버튼 */}
+                <CardContent className="pt-0 relative z-10 flex-1 flex flex-col">
+                  <div className="flex-1"></div>
+
+                  {/* 학습 시작 버튼 - 하단 고정 */}
+                  <div className="mt-4">
                     <Button
                       onClick={() => onSelectSong(songWithThumbnail)}
                       className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg shadow-lg"

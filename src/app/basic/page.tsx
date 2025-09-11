@@ -1,5 +1,5 @@
-import { BasicContainer } from '@/containers/BasicContainer';
+import { redirect } from 'next/navigation';
 
 export default function BasicPage() {
-  return <BasicContainer />;
+  redirect('/learn');
 }

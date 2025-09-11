@@ -1,5 +1,5 @@
-import { HiraganaContainer } from '@/containers/HiraganaContainer';
+import { redirect } from 'next/navigation';
 
 export default function HiraganaPage() {
-  return <HiraganaContainer />;
+  redirect('/learn');
 }
