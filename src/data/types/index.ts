@@ -41,6 +41,7 @@ export type YouTubeSong = {
   youtubeId: string;
   duration: number;
   lyrics: TimedLyricLine[];
+  thumbnailUrl?: string;
 };
 
 export type Artist = {

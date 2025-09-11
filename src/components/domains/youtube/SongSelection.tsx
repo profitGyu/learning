@@ -25,7 +25,7 @@ export function SongSelection({ songs, selectedSong, onSelectSong }: SongSelecti
         <Youtube className="h-5 w-5 text-red-500" />
         YouTube 영상 선택
       </h2>
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {songs.map((song) => (
           <motion.div
             key={song.id}

@@ -34,10 +34,10 @@ export function CurrentLyricDisplay({ lyric, showKorean, showRomaji, isActive = 
             {isActive ? '♪ 현재 가사' : '마지막 가사'}
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-center">
-          <div className="space-y-3">
+        <CardContent className="text-center px-4 py-3 sm:px-6 sm:py-4">
+          <div className="space-y-2 sm:space-y-3">
             <motion.div
-              className={`text-2xl md:text-3xl font-bold transition-colors duration-300 ${isActive ? 'text-gray-800' : 'text-gray-600'
+              className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold transition-colors duration-300 break-words leading-tight ${isActive ? 'text-gray-800' : 'text-gray-600'
                 }`}
               animate={{
                 scale: isActive ? [1, 1.02, 1] : 1
@@ -51,13 +51,13 @@ export function CurrentLyricDisplay({ lyric, showKorean, showRomaji, isActive = 
               {lyric.japanese}
             </motion.div>
             {showRomaji && (
-              <div className={`text-lg font-medium transition-colors duration-300 ${isActive ? 'text-blue-600' : 'text-blue-400'
+              <div className={`text-sm sm:text-base md:text-lg font-medium transition-colors duration-300 break-words ${isActive ? 'text-blue-600' : 'text-blue-400'
                 }`}>
                 {lyric.koreanPronunciation || lyric.romaji}
               </div>
             )}
             {showKorean && (
-              <div className={`text-xl font-medium transition-colors duration-300 ${isActive ? 'text-orange-600' : 'text-gray-500'
+              <div className={`text-base sm:text-lg md:text-xl font-medium transition-colors duration-300 break-words ${isActive ? 'text-orange-600' : 'text-gray-500'
                 }`}>
                 {lyric.korean}
               </div>

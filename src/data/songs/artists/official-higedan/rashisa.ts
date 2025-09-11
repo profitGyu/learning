@@ -6,6 +6,7 @@ export const rashisa: YouTubeSong = {
   artist: "Official髭男dism",
   youtubeId: "keOnleW2eak",
   duration: 288, // 4분 48초 (초 단위)
+  thumbnailUrl: "https://img.youtube.com/vi/keOnleW2eak/maxresdefault.jpg",
   lyrics: [
     { 
       startTime: 16, 

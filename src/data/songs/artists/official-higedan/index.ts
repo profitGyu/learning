@@ -1,6 +1,7 @@
 // Official髭男dism 노래들
 
 export { rashisa } from './rashisa';
+export { goodbye } from './goodbye';
 
 // 아티스트 정보
 export const japaneseArtistInfo = {

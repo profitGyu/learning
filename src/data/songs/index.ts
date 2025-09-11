@@ -1,22 +1,24 @@
 // 노래 데이터 통합 export
 
-import { rashisa } from './artists/japanese-artist/rashisa';
+import { rashisa } from './artists/official-higedan/rashisa';
+import { goodbye } from './artists/official-higedan/goodbye';
 import { chiisanaKoiNoUta } from './artists/mongol800/chiisana-koi-no-uta';
 import { tsugaruKaikyo } from './artists/ishikawa-sayuri/tsugaru-kaikyo';
-import { japaneseArtistInfo } from './artists/japanese-artist';
+import { japaneseArtistInfo } from './artists/official-higedan';
 import { mongol800Info } from './artists/mongol800';
 import { ishikawaSayuriInfo } from './artists/ishikawa-sayuri';
 
 // 개별 export들
-export { rashisa } from './artists/japanese-artist/rashisa';
+export { rashisa } from './artists/official-higedan/rashisa';
+export { goodbye } from './artists/official-higedan/goodbye';
 export { chiisanaKoiNoUta } from './artists/mongol800/chiisana-koi-no-uta';
 export { tsugaruKaikyo } from './artists/ishikawa-sayuri/tsugaru-kaikyo';
-export { japaneseArtistInfo } from './artists/japanese-artist';
+export { japaneseArtistInfo } from './artists/official-higedan';
 export { mongol800Info } from './artists/mongol800';
 export { ishikawaSayuriInfo } from './artists/ishikawa-sayuri';
 
 // YouTube 노래 컬렉션
-export const youtubeSongs = [rashisa];
+export const youtubeSongs = [rashisa, goodbye];
 
 // J-Pop 가사 예시 컬렉션
 export const jpopLyrics = [chiisanaKoiNoUta, tsugaruKaikyo];

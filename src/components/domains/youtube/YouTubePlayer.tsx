@@ -107,27 +107,27 @@ export function YouTubePlayer({
 
   return (
     <div className="space-y-4">
-      {/* YouTube Player */}
+      {/* YouTube Player - 모바일 최적화 */}
       <Card className="bg-black">
-        <CardContent className="p-4">
-          <div className="aspect-video bg-black rounded-lg overflow-hidden">
+        <CardContent className="p-2 sm:p-4">
+          <div className="aspect-video bg-black rounded-lg overflow-hidden relative">
             <YouTube
               videoId={selectedSong.youtubeId}
               opts={opts}
               onReady={onReady}
               onStateChange={onStateChange}
-              className="w-full h-full"
+              className="absolute inset-0 w-full h-full"
             />
           </div>
         </CardContent>
       </Card>
 
-      {/* Custom Controls */}
+      {/* Custom Controls - 모바일 최적화 */}
       <Card className="bg-white/80 backdrop-blur-sm">
-        <CardContent className="p-4">
-          {/* Progress Bar */}
-          <div className="mb-4">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
+        <CardContent className="p-3 sm:p-4">
+          {/* Progress Bar - 모바일 최적화 */}
+          <div className="mb-3 sm:mb-4">
+            <div className="flex justify-between text-xs sm:text-sm text-gray-600 mb-2">
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(selectedSong.duration)}</span>
             </div>
@@ -149,8 +149,8 @@ export function YouTubePlayer({
             </div>
           </div>
 
-          {/* Control Buttons */}
-          <div className="flex items-center justify-center gap-4 mb-4">
+          {/* Control Buttons - 모바일 최적화 */}
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-4">
             <Button
               variant="outline"
               size="sm"
@@ -177,37 +177,41 @@ export function YouTubePlayer({
             </Button>
           </div>
 
-          {/* Volume and Settings */}
-          <div className="flex items-center justify-between">
+          {/* Volume and Settings - 모바일 친화적 레이아웃 */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={toggleMute}
                 disabled={!playerReady}
+                className="flex-shrink-0"
               >
                 {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                <span className="hidden sm:inline ml-1">분류</span>
               </Button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowRomaji(!showRomaji)}
-                className={showRomaji ? 'bg-blue-100' : ''}
+                className={`flex-shrink-0 text-xs sm:text-sm ${showRomaji ? 'bg-blue-100' : ''
+                  }`}
               >
                 {showRomaji ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                한국어 발음
+                <span className="ml-1">한국어 발음</span>
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowKorean(!showKorean)}
-                className={showKorean ? 'bg-green-100' : ''}
+                className={`flex-shrink-0 text-xs sm:text-sm ${showKorean ? 'bg-green-100' : ''
+                  }`}
               >
                 {showKorean ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                한국어
+                <span className="ml-1">한국어</span>
               </Button>
             </div>
           </div>

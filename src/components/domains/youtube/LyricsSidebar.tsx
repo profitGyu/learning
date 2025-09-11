@@ -72,13 +72,13 @@ export function LyricsSidebar({
           영상과 자동으로 동기화되는 가사를 따라 읽어보세요
         </p>
 
-        {/* 타임라인 스크롤바 */}
-        <div className="mt-4 space-y-2 p-3 bg-gray-50/50 rounded-lg border">
+        {/* 타임라인 스크롤바 - 모바일 최적화 */}
+        <div className="mt-4 space-y-2 p-2 sm:p-3 bg-gray-50/50 rounded-lg border overflow-hidden">
           <div className="flex items-center gap-2 text-sm text-gray-700 font-medium">
-            <Navigation className="h-4 w-4 text-orange-500" />
-            <span>타임라인 내비게이션</span>
-            <div className="ml-auto text-xs text-gray-500">
-              {lyrics.length}개 가사 구간
+            <Navigation className="h-4 w-4 text-orange-500 flex-shrink-0" />
+            <span className="truncate">타임라인 내비게이션</span>
+            <div className="ml-auto text-xs text-gray-500 flex-shrink-0">
+              {lyrics.length}개
             </div>
           </div>
           <div className="space-y-1">
@@ -108,8 +108,8 @@ export function LyricsSidebar({
                 style={{ left: `${(currentTime / duration) * 100}%` }}
               >
                 <div className="absolute -top-1 -left-1 w-2 h-2 bg-red-600 rounded-full shadow-lg animate-pulse group-hover:w-3 group-hover:h-3 group-hover:-top-1.5 group-hover:-left-1.5 transition-all duration-200" />
-                {/* 시간 표시 투틀팁 */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                {/* 시간 표시 투틀팁 - 모바일에서 숨김 */}
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
                   {formatTime(currentTime)}
                 </div>
               </div>
@@ -136,7 +136,7 @@ export function LyricsSidebar({
                       seekToTime(lyric.startTime);
                       scrollToLyric(index); // 해당 가사로 스크롤
                     }}
-                    title={`${formatTime(lyric.startTime)}-${formatTime(lyric.endTime)}: ${lyric.japanese.substring(0, 30)}${lyric.japanese.length > 30 ? '...' : ''}`}
+                    title={`${formatTime(lyric.startTime)}-${formatTime(lyric.endTime)}: ${lyric.japanese.substring(0, 20)}${lyric.japanese.length > 20 ? '...' : ''}`}
                   />
                 );
               })}
@@ -165,7 +165,7 @@ export function LyricsSidebar({
                 backgroundColor: currentLyricIndex === index ? 'rgba(249, 115, 22, 0.15)' : 'transparent'
               }}
               transition={{ duration: 0.4, ease: 'easeInOut' }}
-              className={`p-4 rounded-lg cursor-pointer transition-all duration-300 ${currentLyricIndex === index
+              className={`p-3 sm:p-4 rounded-lg cursor-pointer transition-all duration-300 ${currentLyricIndex === index
                 ? 'bg-gradient-to-r from-orange-100 to-red-100 border-2 border-orange-300 shadow-lg transform'
                 : 'hover:bg-gray-50 border border-transparent'
                 }`}
@@ -182,16 +182,16 @@ export function LyricsSidebar({
                     </Badge>
                   )}
                 </div>
-                <div className="text-lg font-bold text-gray-800">
+                <div className="text-base sm:text-lg font-bold text-gray-800 break-words leading-tight">
                   {lyric.japanese}
                 </div>
                 {showRomaji && (
-                  <div className="text-blue-600 font-medium">
+                  <div className="text-sm sm:text-base text-blue-600 font-medium break-words">
                     {lyric.koreanPronunciation || lyric.romaji}
                   </div>
                 )}
                 {showKorean && (
-                  <div className="text-orange-600 font-medium">
+                  <div className="text-sm sm:text-base text-orange-600 font-medium break-words">
                     {lyric.korean}
                   </div>
                 )}
