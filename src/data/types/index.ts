@@ -48,4 +48,5 @@ export type Artist = {
   id: string;
   name: string;
   description?: string;
+  searchKeyword?: string;
 };

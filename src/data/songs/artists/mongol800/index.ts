@@ -6,5 +6,6 @@ export { chiisanaKoiNoUta } from './chiisana-koi-no-uta';
 export const mongol800Info = {
   id: "mongol800",
   name: "MONGOL800",
-  description: "오키나와 출신 록밴드"
+  description: "오키나와 출신 록밴드",
+  searchKeyword: "mongol800, 몽골800, 몽골팔백, 오키나와"
 };

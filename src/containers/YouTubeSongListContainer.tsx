@@ -1,18 +1,52 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import { PageHeader } from '@/components/domains/common/PageHeader';
 import { SongListView } from '@/components/domains/youtube/SongListView';
-import { youtubeSongs } from '@/data';
+import { SongSearchBar } from '@/components/domains/youtube/SongSearchBar';
+import { youtubeSongs, artists } from '@/data';
 import { Badge } from '@/components/ui/badge';
 import type { YouTubeSong } from '@/data/types';
 import { useRouter } from 'next/navigation';
 
 export function YouTubeSongListContainer() {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // 검색 필터링 로직
+  const filteredSongs = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return youtubeSongs;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+
+    return youtubeSongs.filter(song => {
+      // 곡명과 아티스트명으로 검색
+      const titleMatch = song.title.toLowerCase().includes(query);
+      const artistMatch = song.artist.toLowerCase().includes(query);
+
+      // 아티스트의 searchKeyword로 검색
+      const artistInfo = artists.find(artist => artist.name === song.artist);
+      const keywordMatch = artistInfo?.searchKeyword?.toLowerCase().includes(query) || false;
+
+      return titleMatch || artistMatch || keywordMatch;
+    });
+  }, [searchQuery]);
 
   // 노래 선택 핸들러 - 동적 라우팅으로 이동
   const handleSelectSong = (song: YouTubeSong) => {
     router.push(`/youtube/${song.id}`);
+  };
+
+  // 검색어 변경 핸들러
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  // 검색어 초기화 핸들러
+  const handleClearSearch = () => {
+    setSearchQuery('');
   };
 
   const headerChildren = (
@@ -35,8 +69,19 @@ export function YouTubeSongListContainer() {
           {headerChildren}
         </PageHeader>
 
+        {/* 검색 바 */}
+        <div className="mb-8">
+          <SongSearchBar
+            searchQuery={searchQuery}
+            onSearchChange={handleSearchChange}
+            onClearSearch={handleClearSearch}
+            filteredCount={filteredSongs.length}
+            totalCount={youtubeSongs.length}
+          />
+        </div>
+
         <SongListView
-          songs={youtubeSongs}
+          songs={filteredSongs}
           onSelectSong={handleSelectSong}
         />
       </div>
