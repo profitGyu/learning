@@ -2,6 +2,7 @@
 
 export { rashisa } from './rashisa';
 export { goodbye } from './goodbye';
+export { hero } from './hero';
 
 // 아티스트 정보
 export const japaneseArtistInfo = {
