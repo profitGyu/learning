@@ -1,5 +1,5 @@
-import { YouTubeContainer } from '@/containers/YouTubeContainer';
+import { YouTubeSongListContainer } from '../../containers/YouTubeSongListContainer';
 
 export default function YouTubePage() {
-  return <YouTubeContainer />;
+  return <YouTubeSongListContainer />;
 }
