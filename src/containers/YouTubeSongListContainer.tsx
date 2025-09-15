@@ -13,25 +13,39 @@ export function YouTubeSongListContainer() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
 
-  // 검색 필터링 로직
-  const filteredSongs = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return youtubeSongs;
+  // 검색 필터링 및 아티스트별 그룹화 로직
+  const { filteredSongs, songsByArtist } = useMemo(() => {
+    let filtered = youtubeSongs;
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = youtubeSongs.filter(song => {
+        // 곡명과 아티스트명으로 검색
+        const titleMatch = song.title.toLowerCase().includes(query);
+        const artistMatch = song.artist.toLowerCase().includes(query);
+
+        // 아티스트의 searchKeyword로 검색
+        const artistInfo = artists.find(artist => artist.name === song.artist);
+        const keywordMatch = artistInfo?.searchKeyword?.toLowerCase().includes(query) || false;
+
+        return titleMatch || artistMatch || keywordMatch;
+      });
     }
 
-    const query = searchQuery.toLowerCase().trim();
+    // 아티스트별로 그룹화
+    const grouped = filtered.reduce((acc, song) => {
+      const artist = song.artist;
+      if (!acc[artist]) {
+        acc[artist] = [];
+      }
+      acc[artist].push(song);
+      return acc;
+    }, {} as Record<string, YouTubeSong[]>);
 
-    return youtubeSongs.filter(song => {
-      // 곡명과 아티스트명으로 검색
-      const titleMatch = song.title.toLowerCase().includes(query);
-      const artistMatch = song.artist.toLowerCase().includes(query);
-
-      // 아티스트의 searchKeyword로 검색
-      const artistInfo = artists.find(artist => artist.name === song.artist);
-      const keywordMatch = artistInfo?.searchKeyword?.toLowerCase().includes(query) || false;
-
-      return titleMatch || artistMatch || keywordMatch;
-    });
+    return {
+      filteredSongs: filtered,
+      songsByArtist: grouped
+    };
   }, [searchQuery]);
 
   // 노래 선택 핸들러 - 동적 라우팅으로 이동
@@ -82,6 +96,7 @@ export function YouTubeSongListContainer() {
 
         <SongListView
           songs={filteredSongs}
+          songsByArtist={songsByArtist}
           onSelectSong={handleSelectSong}
         />
       </div>

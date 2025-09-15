@@ -10,10 +10,11 @@ import { ensureThumbnailUrl } from '@/lib/youtube-utils';
 
 interface SongListViewProps {
   songs: YouTubeSong[];
+  songsByArtist: Record<string, YouTubeSong[]>;
   onSelectSong: (song: YouTubeSong) => void;
 }
 
-export function SongListView({ songs, onSelectSong }: SongListViewProps) {
+export function SongListView({ songs, songsByArtist, onSelectSong }: SongListViewProps) {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -45,107 +46,133 @@ export function SongListView({ songs, onSelectSong }: SongListViewProps) {
         </motion.div>
       </div>
 
-      {/* 노래 리스트 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {songs.map((song, index) => {
-          // 썸네일 URL이 없으면 자동 생성
-          const songWithThumbnail = ensureThumbnailUrl(song);
+      {/* 아티스트별 노래 섹션 */}
+      <div className="space-y-12">
+        {Object.entries(songsByArtist).map(([artist, artistSongs], sectionIndex) => (
+          <motion.div
+            key={artist}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: sectionIndex * 0.1 }}
+            className="space-y-6"
+          >
+            {/* 아티스트 섹션 헤더 */}
+            <div className="text-center">
+              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                {artist}
+              </h3>
+              <div className="flex items-center justify-center gap-2">
+                <Badge variant="outline" className="bg-purple-50 text-purple-600 border-purple-200">
+                  {artistSongs.length}곡
+                </Badge>
+                <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+              </div>
+            </div>
 
-          return (
-            <motion.div
-              key={song.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => onSelectSong(songWithThumbnail)}
-            >
-              <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl border-2 hover:border-red-300 overflow-hidden relative h-full flex flex-col">
-                {/* 썸네일 배경 이미지 */}
-                {songWithThumbnail.thumbnailUrl && (
-                  <div className="absolute inset-0 z-0">
-                    <img
-                      src={songWithThumbnail.thumbnailUrl}
-                      alt={`${songWithThumbnail.title} thumbnail`}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        // 썸네일 로드 실패 시 기본 배경으로 대체
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                      }}
-                    />
-                    {/* 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300" />
-                  </div>
-                )}
+            {/* 해당 아티스트의 노래들 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {artistSongs.map((song, index) => {
+                // 썸네일 URL이 없으면 자동 생성
+                const songWithThumbnail = ensureThumbnailUrl(song);
 
-                {/* 썸네일이 없을 때의 기본 배경 */}
-                {!songWithThumbnail.thumbnailUrl && (
-                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-purple-100 to-pink-100 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300" />
-                )}
+                return (
+                  <motion.div
+                    key={song.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: (sectionIndex * 0.1) + (index * 0.05) }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => onSelectSong(songWithThumbnail)}
+                  >
+                    <Card className="group cursor-pointer transition-all duration-300 hover:shadow-xl border-2 hover:border-red-300 overflow-hidden relative h-full flex flex-col">
+                      {/* 썸네일 배경 이미지 */}
+                      {songWithThumbnail.thumbnailUrl && (
+                        <div className="absolute inset-0 z-0">
+                          <img
+                            src={songWithThumbnail.thumbnailUrl}
+                            alt={`${songWithThumbnail.title} thumbnail`}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              // 썸네일 로드 실패 시 기본 배경으로 대체
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
+                          />
+                          {/* 오버레이 */}
+                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300" />
+                        </div>
+                      )}
 
-                <CardHeader className="pb-4 relative z-10">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center group-hover:from-purple-600 group-hover:to-pink-600 transition-all duration-300 shadow-lg">
-                        <Youtube className="h-6 w-6 text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <CardTitle className={`text-lg font-bold truncate ${songWithThumbnail.thumbnailUrl ? 'text-white drop-shadow-lg' : 'text-gray-800'
-                          }`}>
-                          {songWithThumbnail.title}
-                        </CardTitle>
-                        <p className={`text-sm truncate ${songWithThumbnail.thumbnailUrl ? 'text-white/90 drop-shadow-md' : 'text-gray-600'
-                          }`}>{songWithThumbnail.artist}</p>
-                      </div>
-                    </div>
+                      {/* 썸네일이 없을 때의 기본 배경 */}
+                      {!songWithThumbnail.thumbnailUrl && (
+                        <div className="absolute inset-0 z-0 bg-gradient-to-br from-purple-100 to-pink-100 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300" />
+                      )}
 
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline" className={`text-xs ${songWithThumbnail.thumbnailUrl
-                        ? 'bg-black/30 text-white border-white/30'
-                        : ''
-                        }`}>
-                        <Clock className="h-3 w-3 mr-1" />
-                        {formatTime(songWithThumbnail.duration)}
-                      </Badge>
-                      <Badge variant="secondary" className={`text-xs ${songWithThumbnail.thumbnailUrl
-                        ? 'bg-black/30 text-white'
-                        : ''
-                        }`}>
-                        {songWithThumbnail.lyrics.length}개 가사
-                      </Badge>
-                      <Badge variant="outline" className={`text-xs ${songWithThumbnail.thumbnailUrl
-                        ? 'bg-purple-500/80 text-white border-purple-400/50'
-                        : 'bg-purple-50 text-purple-600'
-                        }`}>
-                        YouTube 연동
-                      </Badge>
-                    </div>
-                  </div>
-                </CardHeader>
+                      <CardHeader className="pb-4 relative z-10">
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center group-hover:from-purple-600 group-hover:to-pink-600 transition-all duration-300 shadow-lg">
+                              <Youtube className="h-6 w-6 text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <CardTitle className={`text-lg font-bold truncate ${songWithThumbnail.thumbnailUrl ? 'text-white drop-shadow-lg' : 'text-gray-800'
+                                }`}>
+                                {songWithThumbnail.title}
+                              </CardTitle>
+                              <p className={`text-sm truncate ${songWithThumbnail.thumbnailUrl ? 'text-white/90 drop-shadow-md' : 'text-gray-600'
+                                }`}>{songWithThumbnail.artist}</p>
+                            </div>
+                          </div>
 
-                <CardContent className="pt-0 relative z-10 flex-1 flex flex-col">
-                  <div className="flex-1"></div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Badge variant="outline" className={`text-xs ${songWithThumbnail.thumbnailUrl
+                              ? 'bg-black/30 text-white border-white/30'
+                              : ''
+                              }`}>
+                              <Clock className="h-3 w-3 mr-1" />
+                              {formatTime(songWithThumbnail.duration)}
+                            </Badge>
+                            <Badge variant="secondary" className={`text-xs ${songWithThumbnail.thumbnailUrl
+                              ? 'bg-black/30 text-white'
+                              : ''
+                              }`}>
+                              {songWithThumbnail.lyrics.length}개 가사
+                            </Badge>
+                            <Badge variant="outline" className={`text-xs ${songWithThumbnail.thumbnailUrl
+                              ? 'bg-purple-500/80 text-white border-purple-400/50'
+                              : 'bg-purple-50 text-purple-600'
+                              }`}>
+                              YouTube 연동
+                            </Badge>
+                          </div>
+                        </div>
+                      </CardHeader>
 
-                  {/* 학습 시작 버튼 - 하단 고정 */}
-                  <div className="mt-4">
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation(); // 카드 클릭 이벤트 중복 방지
-                        onSelectSong(songWithThumbnail);
-                      }}
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg shadow-lg"
-                    >
-                      <Play className="h-4 w-4 mr-2" />
-                      학습 시작하기
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          );
-        })}
+                      <CardContent className="pt-0 relative z-10 flex-1 flex flex-col">
+                        <div className="flex-1"></div>
+
+                        {/* 학습 시작 버튼 - 하단 고정 */}
+                        <div className="mt-4">
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation(); // 카드 클릭 이벤트 중복 방지
+                              onSelectSong(songWithThumbnail);
+                            }}
+                            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg shadow-lg"
+                          >
+                            <Play className="h-4 w-4 mr-2" />
+                            학습 시작하기
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        ))}
       </div>
 
       {/* 추가 정보 */}
